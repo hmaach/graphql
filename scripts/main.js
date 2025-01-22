@@ -1,1 +1,5 @@
-console.log("hello");
+import { renderLoginPage } from "./components/auth.js"
+
+document.addEventListener('DOMContentLoaded', () => {
+    renderLoginPage()
+})

@@ -1,0 +1,31 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 400px;
+    padding: 20px;
+    border-radius: 10px;
+    border: red solid 2px;
+}
+
+.login-card input {
+    padding: 7px;
+    border-radius: 10px;
+    outline: none !important;
+}
+
+.login-card button {
+    padding: 7px;
+    border-radius: 10px;
+    outline: none !important;
+}

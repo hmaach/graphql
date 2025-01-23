@@ -1,10 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,100;0,300;0,400;0,500;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,700;1,800;1,900&display=swap');
 
 :root {
-    --bg-color: rgb(16, 27, 63);
+    --bg-color: rgb(26, 25, 28);
+    --bg-color-light: rgb(39, 37, 41);
+    --primary-color: rgb(170, 130, 0);
     --text-color: white;
     --text-color-secondary: rgb(187, 187, 187);
-    --border-color: red;
+    --text-color-dark: rgb(26, 25, 28);
+    --border-color: rgb(255, 255, 255);
+    --transition: ease 0.2s
 }
 
 * {
@@ -16,4 +20,30 @@ body {
     font-family: "Alegreya Sans", serif;
     background-color: var(--bg-color);
     color: var(--text-color);
+    transition: var( --transition);
+}
+
+.btn {
+    background-color: var(--primary-color);
+    outline: none;
+    border: none;
+    color: var(--text-color);
+    padding: 10px 20px;
+    font-size: large;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn:hover {
+    box-shadow: var(--primary-color) 1px 1px 7px;
+}
+
+.error {
+    display: inline-block;
+    min-height: 25px;
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
 }

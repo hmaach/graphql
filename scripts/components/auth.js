@@ -5,8 +5,11 @@ export const renderLoginPage = () => {
         <div class="login-card">
             <h1>Login</h1>
             <input type="text" id="username" placeholder="username or email" required/>
-            <input type="password" id="password" placeholder="password" required/>
-            <button id="login-button">Login</button>
+            <div style="display:flex;flex-direction:column">
+                <input type="password" id="password" placeholder="password" required/>
+                <span class="error"></span>
+            </div>
+            <button id="login-button" class="btn">Login</button>
         </div>
     </div>`
 

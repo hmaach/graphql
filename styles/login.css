@@ -15,17 +15,23 @@
     width: 400px;
     padding: 20px;
     border-radius: 10px;
-    border: red solid 2px;
+    background-color: var(--bg-color-light);
+    border: solid 2px var(--border-color);
 }
 
 .login-card input {
-    padding: 7px;
-    border-radius: 10px;
-    outline: none !important;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px transparent solid;;
+    outline: none;
+    font-size: medium;
+    font-weight: 600;
+    color: var(--text-color-dark);
 }
 
-.login-card button {
-    padding: 7px;
-    border-radius: 10px;
-    outline: none !important;
+.login-card input:focus {
+    border: var(--primary-color) solid 2px;
+    outline: none;
 }
+
+.login-card .error {}

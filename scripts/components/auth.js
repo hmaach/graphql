@@ -1,3 +1,5 @@
+import { writeErrorMessage } from "../utils/error.js";
+
 export const renderLoginPage = () => {
     const container = document.createElement('div');
     container.innerHTML = /*html*/`
@@ -5,13 +7,19 @@ export const renderLoginPage = () => {
         <div class="login-card">
             <h1>Login</h1>
             <input type="text" id="username" placeholder="username or email" required/>
-            <div style="display:flex;flex-direction:column">
-                <input type="password" id="password" placeholder="password" required/>
-                <span class="error"></span>
-            </div>
-            <button id="login-button" class="btn">Login</button>
+            <input type="password" id="password" placeholder="password" required/>
+            <span class="error" id="login-error"></span>
+            <button id="login-button" class="btn">Login <i class="fa-solid fa-right-to-bracket"></i></button>
         </div>
     </div>`
 
     document.body.appendChild(container);
+
+    // empty the error message
+    document.getElementById('username')?.addEventListener("focus", () => {
+        writeErrorMessage("login-error","")
+    })
+    document.getElementById('password')?.addEventListener("focus", () => {
+        writeErrorMessage("login-error","")
+    })
 }

@@ -12,7 +12,7 @@
     justify-content: center;
     align-items: center;
     gap: 20px;
-    width: 400px;
+    width: 500px;
     padding: 20px;
     border-radius: 10px;
     background-color: var(--bg-color-light);
@@ -20,6 +20,7 @@
 }
 
 .login-card input {
+    width: 70%;
     padding: 10px;
     border-radius: 5px;
     border: 2px transparent solid;;
@@ -33,5 +34,3 @@
     border: var(--primary-color) solid 2px;
     outline: none;
 }
-
-.login-card .error {}

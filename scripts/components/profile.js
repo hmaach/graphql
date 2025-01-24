@@ -1,3 +1,4 @@
+import { handleLogout } from "../app/handleAuth.js";
 
 export const renderProfilePage = () => {
     // Clear previous content
@@ -9,7 +10,9 @@ export const renderProfilePage = () => {
         <div class="profile">
             <div class="profile-header">
                 <h1>Welcome, Hamza Maach!</h1>
-                <button id="logout-button" class="btn">Logout <i class="fa-solid fa-right-from-bracket"></i></button>
+                <button id="logout-button" class="btn">
+                    Logout <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
             </div>
             <div class="profile-container">
             </div
@@ -17,4 +20,5 @@ export const renderProfilePage = () => {
     </div>`
 
     document.body.appendChild(container);
+    handleLogout()
 }

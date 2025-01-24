@@ -5,11 +5,12 @@ import { writeErrorMessage } from "../utils/error.js"
 
 export const handleLogin = () => {
     renderLoginPage()
-    const btn = document.getElementById("login-button")
-    btn.addEventListener('click', async () => {
+    const form = document.getElementById("login-form")
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault()
         const credentials = {
-            username: document.getElementById('username').value,
-            password: document.getElementById('password').value,
+            username: form?.username.value,
+            password: form?.password.value,
         }
         try {
             const response = await submitLogin(credentials)
@@ -21,5 +22,13 @@ export const handleLogin = () => {
         } catch (error) {
             writeErrorMessage("login-error", error)
         }
+    })
+}
+
+export const handleLogout = () => {
+    document.getElementById('logout-button')?.addEventListener('click', () => {
+        localStorage.removeItem('JWT')
+        document.body.innerHTML = ``
+        handleLogin()
     })
 }

@@ -1,7 +1,7 @@
 import { submitLogin } from "../api/login.js"
 import { renderLoginPage } from "../components/auth.js"
-import { renderProfilePage } from "../components/profile.js"
 import { writeErrorMessage } from "../utils/error.js"
+import { handleProfile } from "./handleProfile.js"
 
 export const handleLogin = () => {
     renderLoginPage()
@@ -18,7 +18,7 @@ export const handleLogin = () => {
                 throw response.error
             }
             localStorage.setItem('JWT', response)
-            renderProfilePage()
+            handleProfile()
         } catch (error) {
             writeErrorMessage("login-error", error)
         }
@@ -26,9 +26,7 @@ export const handleLogin = () => {
 }
 
 export const handleLogout = () => {
-    document.getElementById('logout-button')?.addEventListener('click', () => {
-        localStorage.removeItem('JWT')
-        document.body.innerHTML = ``
-        handleLogin()
-    })
+    localStorage.removeItem('JWT')
+    document.body.innerHTML = ``
+    handleLogin()
 }

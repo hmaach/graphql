@@ -1,7 +1,8 @@
-.profile{
+.profile {
     width: 100%;
     height: 100vh;
 }
+
 .profile-header {
     display: flex;
     justify-content: space-between;
@@ -15,4 +16,63 @@
     gap: 20px;
     padding: 20px;
     height: 80vh;
+}
+
+#transactions-chart {
+    min-width: 100%;
+    min-height: 50vh;
+    background-color: var(--bg-color-light);
+}
+.transactions-chart-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.transactions-chart-info .event-name{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+svg {
+    width: 100%;
+}
+
+#transaction-info {
+    position: absolute;
+
+    /* width: 250px; */
+    background-color: var(--bg-color-light);
+    color: var(--text-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 100;
+    overflow: hidden;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+#transaction-info .transaction-header {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 10px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+}
+
+#transaction-info .transaction-details {
+    padding: 10px;
+}
+
+#transaction-info .transaction-details div {
+    margin-bottom: 5px;
+}
+
+#transaction-info .transaction-details strong {
+    color: var(--text-color-secondary);
+    margin-right: 5px;
 }

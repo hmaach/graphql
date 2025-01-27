@@ -47,3 +47,43 @@ body {
     font-weight: bold;
     margin-top: 10px;
 }
+
+#no-script {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+#no-script>div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+    color: black;
+    background-color: white;
+    border-radius: 20px;
+    width: 60%;
+    padding: 30px;
+}
+
+#no-script>div img {
+    width: 200px;
+    height: 200px;
+    border-radius: 0%;
+}
+
+#no-script>div h1 {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+#no-script>div p {
+    font-size: 15px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+
+}

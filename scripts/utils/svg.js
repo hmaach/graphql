@@ -29,33 +29,36 @@ export const drawAxes = (svg, width, height, padding, axisColor) => {
 };
 
 export const drawGridlines = (svg, width, height, padding, axisColor, maxAmount, minAmount, numYLines, unit) => {
-    for (let i = 0; i <= numYLines; i++) {
-        const y = padding + (i * (height - 2 * padding)) / numYLines;
-        const gridLine = createSvgElement("line", {
-            x1: padding,
-            y1: y,
-            x2: width - padding,
-            y2: y,
-            stroke: axisColor,
-            "stroke-width": "1",
-            "stroke-dasharray": "1,5",
-            "stroke-opacity": "0.1",
-        });
-        svg.appendChild(gridLine);
+    const chartHeight = height - 2 * padding;
+    const step = chartHeight / numYLines;
 
-        // Add y-axis labels
-        const amountLabel = createSvgElement("text", {
+    for (let i = 0; i <= numYLines; i++) {
+        const y = padding + i * step;
+        const amount = maxAmount - ((maxAmount - minAmount) * i) / numYLines;
+
+        svg.appendChild(
+            createSvgElement("line", {
+                x1: padding,
+                y1: y,
+                x2: width - padding,
+                y2: y,
+                stroke: axisColor,
+                "stroke-width": "1",
+                "stroke-dasharray": "1,5",
+                "stroke-opacity": "0.4",
+            })
+        );
+
+        const label = createSvgElement("text", {
             x: padding - 10,
             y: y,
             "text-anchor": "end",
-            "alignment-baseline": "middle",
             fill: axisColor,
             "font-size": "10",
         });
-        const amount = minAmount + (maxAmount - minAmount) * (1 - i / numYLines);
-        const labelAmount = amount > 100 ? Math.round(amount / 1000) : Math.round(amount)
-        amountLabel.textContent = `${labelAmount} ${unit}`;
-        svg.appendChild(amountLabel);
+
+        label.textContent = `${Math.round(amount > 100 ? amount / 1000 : amount)} ${unit}`;
+        svg.appendChild(label);
     }
 };
 
@@ -67,7 +70,7 @@ export const getMaxAmountPerSkill = (transactions) => {
         const { type, amount } = transaction;
 
         if (!maxSkillMap.has(type) || maxSkillMap.get(type) < amount) {
-            maxSkillMap.set(type, amount); 
+            maxSkillMap.set(type, amount);
         }
     });
 

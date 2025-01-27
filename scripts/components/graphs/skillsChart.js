@@ -55,7 +55,7 @@ export const renderSkillsChart = async () => {
 
     // Draw bars for each skill
     skillsMap.forEach(([skill, amount], index) => {
-        const barHeight = ((amount - minAmount) / (maxAmount - minAmount)) * (height - 2 * padding);
+        const barHeight = (amount / maxAmount) * (height - 2 * padding);
         const x = padding + index * barWidth;
         const y = height - padding - barHeight;
 

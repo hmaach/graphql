@@ -39,51 +39,35 @@ export const renderTransactionsChart = async () => {
     const maxDate = Math.max(...dates.map((date) => date.getTime()));
     const minDate = Math.min(new Date(startAt).getTime());
 
-    let cumulativeAmount = 0;
-    const cumulativeAmounts = [0, ...transactions.map((t) => {
-        cumulativeAmount += t.amount;
-        return cumulativeAmount;
+    let sumAmount = 0;
+    const sumAmounts = [0, ...transactions.map((t) => {
+        sumAmount += t.amount;
+        return sumAmount;
     })];
 
-    const maxAmount = Math.max(...cumulativeAmounts);
+    const maxAmount = Math.max(...sumAmounts);
     const minAmount = 0;
 
     const scales = {
-        xScale: (date) => padding + ((date - minDate) / (maxDate - minDate)) * (width - 2 * padding),
-        yScale: (amount) => height - padding - ((amount - minAmount) / (maxAmount - minAmount)) * (height - 2 * padding),
-    };
+        xScale: (date) => (date - minDate) / (maxDate - minDate) * (width - 2 * padding) + padding,
+        yScale: (amount) => height - padding - (amount - minAmount) / (maxAmount - minAmount) * (height - 2 * padding),
+    };    
+    
 
     drawAxes(svg, width, height, padding, axisColor);
     drawGridlines(svg, width, height, padding, axisColor, maxAmount, minAmount, 5, "KB");
-    plotDataPoints(svg, transactions, cumulativeAmounts, scales, { lineColor, pointColor }, startAt, height, padding);
+    plotDataPoints(svg, transactions, sumAmounts, scales, { lineColor, pointColor }, startAt, height, padding);
 
     container.appendChild(svg);
 };
 
 
-const getTransactionsData = async (name, token) => {
-    try {
-        const response = await fetchGraphQL(GET_TRANSACTIONS, { name }, token);
-        const event = response.data.event[0].object.events[0];
-        const transactions = Array.isArray(response.data.transaction) ? response.data.transaction : [];
-        return {
-            startAt: event.startAt,
-            endAt: event.endAt,
-            transactions,
-        };
-    } catch (error) {
-        console.error("Error fetching transactions:", error);
-        return null;
-    }
-};
-
-
-const plotDataPoints = (svg, transactions, cumulativeAmounts, scales, colors, startAt, height, padding) => {
+const plotDataPoints = (svg, transactions, sumAmounts, scales, colors, startAt, height, padding) => {
     let previousPoint = { x: scales.xScale(new Date(startAt).getTime()), y: height - padding };
 
     transactions.forEach((transaction, index) => {
         const x = scales.xScale(new Date(transaction.createdAt).getTime());
-        const y = scales.yScale(cumulativeAmounts[index + 1]);
+        const y = scales.yScale(sumAmounts[index + 1]);
 
         // Draw line from previous point
         const line = createSvgElement("line", {
@@ -111,6 +95,23 @@ const plotDataPoints = (svg, transactions, cumulativeAmounts, scales, colors, st
         previousPoint = { x, y };
     });
 };
+
+const getTransactionsData = async (name, token) => {
+    try {
+        const response = await fetchGraphQL(GET_TRANSACTIONS, { name }, token);
+        const event = response.data.event[0].object.events[0];
+        const transactions = Array.isArray(response.data.transaction) ? response.data.transaction : [];
+        return {
+            startAt: event.startAt,
+            endAt: event.endAt,
+            transactions,
+        };
+    } catch (error) {
+        console.error("Error fetching transactions:", error);
+        return null;
+    }
+};
+
 
 const addHoverEvent = (circle, transaction, x, y) => {
     const transactionInfo = document.getElementById("transaction-info");

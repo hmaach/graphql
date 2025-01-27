@@ -1,6 +1,7 @@
-import { fetchGraphQL } from "../../api/graphql.js";
-import { GET_TRANSACTIONS } from "../../api/queries.js";
-import { createSvgElement, formatDate } from "../../utils.js";
+import { fetchGraphQL } from "../../api/graphqlRequests.js";
+import { GET_TRANSACTIONS } from "../../api/graphql.js";
+import { formatDate } from "../../utils/date.js";
+import { createSvgElement, drawAxes, drawGridlines } from "../../utils/svg.js";
 
 export const renderTransactionsChart = async () => {
     const token = localStorage.getItem("JWT");
@@ -13,8 +14,9 @@ export const renderTransactionsChart = async () => {
 
     const container = document.getElementById("transactions-chart");
     container.innerHTML = /*html*/`
+        <div class="chart-border"></div>
         <div class="transactions-chart-info">
-            <span class="event-name">${name}</span>
+            <h2 class="event-name">${name}</h2>
             <span class="event-date">${formatDate(startAt)} -> ${formatDate(endAt)}</span>
         </div>
     `;
@@ -52,7 +54,7 @@ export const renderTransactionsChart = async () => {
     };
 
     drawAxes(svg, width, height, padding, axisColor);
-    drawGridlines(svg, width, height, padding, axisColor, maxAmount, minAmount);
+    drawGridlines(svg, width, height, padding, axisColor, maxAmount, minAmount, 5, "KB");
     plotDataPoints(svg, transactions, cumulativeAmounts, scales, { lineColor, pointColor }, startAt, height, padding);
 
     container.appendChild(svg);
@@ -75,56 +77,6 @@ const getTransactionsData = async (name, token) => {
     }
 };
 
-const drawAxes = (svg, width, height, padding, axisColor) => {
-    const xAxis = createSvgElement("line", {
-        x1: padding,
-        y1: height - padding,
-        x2: width - padding,
-        y2: height - padding,
-        stroke: axisColor,
-        "stroke-width": "1",
-    });
-    const yAxis = createSvgElement("line", {
-        x1: padding,
-        y1: padding,
-        x2: padding,
-        y2: height - padding,
-        stroke: axisColor,
-        "stroke-width": "1",
-    });
-    svg.appendChild(xAxis);
-    svg.appendChild(yAxis);
-};
-
-const drawGridlines = (svg, width, height, padding, axisColor, maxAmount, minAmount, numYLines = 5) => {
-    for (let i = 0; i <= numYLines; i++) {
-        const y = padding + (i * (height - 2 * padding)) / numYLines;
-        const gridLine = createSvgElement("line", {
-            x1: padding,
-            y1: y,
-            x2: width - padding,
-            y2: y,
-            stroke: axisColor,
-            "stroke-width": "1",
-            "stroke-dasharray": "1,5",
-            "stroke-opacity": "0.1",
-        });
-        svg.appendChild(gridLine);
-
-        // Add y-axis labels
-        const amountLabel = createSvgElement("text", {
-            x: padding - 10,
-            y: y,
-            "text-anchor": "end",
-            "alignment-baseline": "middle",
-            fill: axisColor,
-            "font-size": "10",
-        });
-        const labelAmount = minAmount + (maxAmount - minAmount) * (1 - i / numYLines);
-        amountLabel.textContent = `${Math.round(labelAmount / 1000)} KB`;
-        svg.appendChild(amountLabel);
-    }
-};
 
 const plotDataPoints = (svg, transactions, cumulativeAmounts, scales, colors, startAt, height, padding) => {
     let previousPoint = { x: scales.xScale(new Date(startAt).getTime()), y: height - padding };

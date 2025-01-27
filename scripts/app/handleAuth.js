@@ -1,5 +1,5 @@
-import { submitLogin } from "../api/login.js"
-import { renderLoginPage } from "../components/auth.js"
+import { submitLogin } from "../api/authRequests.js"
+import { renderLoginPage } from "../components/authComponent.js"
 import { writeErrorMessage } from "../utils/error.js"
 import { handleProfile } from "./handleProfile.js"
 

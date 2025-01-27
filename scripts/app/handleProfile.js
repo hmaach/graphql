@@ -1,6 +1,6 @@
-import { fetchGraphQL } from "../api/graphql.js"
-import { GET_USER_INFO } from "../api/queries.js"
-import { renderProfilePage } from "../components/profile.js"
+import { fetchGraphQL } from "../api/graphqlRequests.js"
+import { GET_USER_INFO } from "../api/graphql.js"
+import { renderProfilePage } from "../components/profileComponent.js"
 import { handleLogout } from "./handleAuth.js"
 
 export const handleProfile = async () => {

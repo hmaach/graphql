@@ -119,8 +119,8 @@ const addHoverEvent = (circle, transaction, x, y) => {
     circle.addEventListener("mouseover", () => {
         const date = new Date(transaction.createdAt);
         transactionInfo.style.display = "block";
-        transactionInfo.style.left = `${x}px`;
-        transactionInfo.style.top = `${y}px`;
+        transactionInfo.style.left = `${x + 150}px`;
+        transactionInfo.style.top = `${y + 500}px`;
         transactionInfo.innerHTML = /*html*/`
             <div class="transaction-header">${transaction.object.name}</div>
             <div class="transaction-details">

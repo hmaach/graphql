@@ -225,7 +225,7 @@ svg {
     color: var(--text-color);
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: block;
+    display: none;
     z-index: 100;
     overflow: hidden;
     font-size: 14px;
